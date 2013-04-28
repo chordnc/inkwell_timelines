@@ -551,9 +551,26 @@ cat_0_0 =Category.create :name => 'Category_0_0', :owner_id => pushkin.id, :owne
 cat_0_0_0 = Category.create :name => 'Category_0_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0
 cat_0_0_1 =Category.create :name => 'Category_0_0_1', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0
 cat_0_1 =Category.create :name => 'Category_0_1', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0
-Category.create :name => 'Category_1', :owner_id => pushkin.id, :owner_type => 'u'
+cat_1 = Category.create :name => 'Category_1', :owner_id => pushkin.id, :owner_type => 'u'
 cat_2 = Category.create :name => 'Category_2', :owner_id => pushkin.id, :owner_type => 'u'
 cat_2_0 =Category.create :name => 'Category_2_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_2
+
+cat_0.child_ids = ActiveSupport::JSON.encode [cat_0_0.id, cat_0_0_0.id, cat_0_0_1.id, cat_0_1.id]
+cat_0.save
+cat_0_0.child_ids = ActiveSupport::JSON.encode [cat_0_0_0.id, cat_0_0_1.id]
+cat_0_0.save
+cat_0_0_0.child_ids = ActiveSupport::JSON.encode []
+cat_0_0_0.save
+cat_0_0_1.child_ids = ActiveSupport::JSON.encode []
+cat_0_0_1.save
+cat_0_1.child_ids = ActiveSupport::JSON.encode []
+cat_0_1.save
+cat_1.child_ids = ActiveSupport::JSON.encode []
+cat_1.save
+cat_2.child_ids = ActiveSupport::JSON.encode [cat_2_0.id]
+cat_2.save
+cat_2_0.child_ids = ActiveSupport::JSON.encode []
+cat_2_0.save
 
 Blogline.create :item_id => yesenin_post_6.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
 blogline_p_9 = Blogline.create :item_id => pushkin_post_6.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
@@ -579,3 +596,11 @@ blogline_p_1 = Blogline.create :item_id => pushkin_comment_0.id, :item_type => '
 Blogline.create :item_id => lermontov_post_0.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
 Blogline.create :item_id => yesenin_post_0.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
 blogline_p_0 = Blogline.create :item_id => pushkin_post_0.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u', :category_ids => "[#{cat_0_0_0.id},#{cat_2_0.id}]"
+
+BloglinesCategories.create :category_id => cat_0_0.id, :blog_item_id => blogline_p_5.id, :blog_item_created_at => blogline_p_5.created_at, :item_id => blogline_p_5.item_id, :item_type => blogline_p_5.item_type
+BloglinesCategories.create :category_id => cat_2_0.id, :blog_item_id => blogline_p_5.id, :blog_item_created_at => blogline_p_5.created_at, :item_id => blogline_p_5.item_id, :item_type => blogline_p_5.item_type
+BloglinesCategories.create :category_id => cat_0.id, :blog_item_id => blogline_p_4.id, :blog_item_created_at => blogline_p_4.created_at, :item_id => blogline_p_4.item_id, :item_type => blogline_p_4.item_type
+BloglinesCategories.create :category_id => cat_2.id, :blog_item_id => blogline_p_3.id, :blog_item_created_at => blogline_p_3.created_at, :item_id => blogline_p_3.item_id, :item_type => blogline_p_3.item_type
+BloglinesCategories.create :category_id => cat_0_0_1.id, :blog_item_id => blogline_p_1.id, :blog_item_created_at => blogline_p_1.created_at, :item_id => blogline_p_1.item_id, :item_type => blogline_p_1.item_type
+BloglinesCategories.create :category_id => cat_0_0_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
+BloglinesCategories.create :category_id => cat_2_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
