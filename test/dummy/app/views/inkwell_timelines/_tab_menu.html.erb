@@ -1,0 +1,9 @@
+<div class="tab-menu">
+  <% options.each do |option| %>
+  <span class="<%= option[:class] %>
+    <% if option[:active] %> active
+    <% end %>">
+    <%= option[:name] %>
+  </span>
+  <% end %>
+</div>

@@ -10,8 +10,10 @@ module InkwellTimelines
             :timelines => [
                 {
                     :id => 'blogline',
-                    :data_get => ->(options = {}) {
-                      #blogline_items = Blogline.
+                    :name => 'Blog',
+                    :active => true,
+                    :first_data_get => ->(options = {}) {
+                      options[:obj].blogline options
                     }
                 }
             ]

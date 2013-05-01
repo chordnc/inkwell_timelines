@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
    #attr_accessible :title, :body
+  has_many :posts
+  has_many :comments
+
   def blogline(options = {})
     last_shown_obj_id = options[:last_shown_obj_id]
     limit = options[:limit] || 10
@@ -11,7 +14,6 @@ class User < ActiveRecord::Base
       categories.each do |category|
         category_ids = category_ids | ActiveSupport::JSON.decode(category.child_ids) | [category.id]
       end
-      puts category_ids
 
       if last_shown_obj_id
         bloglines_categories = BloglinesCategories.where(:category_id => category_ids).where("blog_item_created_at < ?", Blogline.find(last_shown_obj_id).created_at).order("blog_item_created_at DESC").limit(limit)
@@ -51,5 +53,22 @@ class User < ActiveRecord::Base
       result << blog_obj
     end
     result
+  end
+
+  def reblog?(obj)
+    if self.id % 2 == 1
+      true
+    else
+      false
+    end
+
+  end
+
+  def favorite?(obj)
+    if self.id % 2 == 1
+      true
+    else
+      false
+    end
   end
 end

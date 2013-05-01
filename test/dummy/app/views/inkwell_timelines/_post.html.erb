@@ -1,1 +1,23 @@
-<p>Post</p>
+<div class="wall_item">
+  <a href="<%= user_path record.user.id %>" class="avatar_link"><img class="avatar" src="<%= record.user.avatar %>" alt="<%= record.user.nick %>"></a>
+
+  <div class="item_container">
+    <div class="item_description">
+      <span class="name"> <%= record.user.name %>:</span>
+      <span class="title"> <%= record.title %></span>
+    </div>
+    <a class="item_img_link"><img src="<%= record.preview_image %>" class="item_img"></a>
+
+    <p><%= truncate record.body, :length => 500 %></p>
+
+    <div class="clear item_menu">
+      <span class="favorite_action action"><%= record.favorite_count %></span>
+      <span class="reblog_action action"><%= record.reblog_count %></span>
+      <span class="comment_action action"><%= record.comment_count %></span>
+      <span class="date"><%= record.created_at.utc.to_i * 1000 %></span>
+
+      <div class="clear"></div>
+    </div>
+
+  </div>
+</div>
