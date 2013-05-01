@@ -11,3 +11,20 @@
  *= require_self
  *= require_tree .
  */
+
+.inkwell_timelines * {
+    margin: 0;
+    padding: 0;
+}
+
+.inkwell_timelines {
+    font: 14px normal Arial, Helvetica, sans-serif;
+}
+
+.inkwell_timelines .clear {
+    clear: both;
+}
+
+.inkwell_timelines img {
+    border: none;
+}

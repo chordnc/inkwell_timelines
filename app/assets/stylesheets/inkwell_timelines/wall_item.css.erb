@@ -1,0 +1,106 @@
+.inkwell_timelines .wall_item {
+    width: 620px;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.inkwell_timelines .wall_item .avatar_link {
+    position: absolute;
+}
+
+.inkwell_timelines .wall_item .avatar {
+    width: 50px;
+    height: 50px;
+}
+
+.inkwell_timelines .wall_item .item_container {
+    margin-left: 60px;
+}
+
+.inkwell_timelines .wall_item .item_img {
+    width: 150px;
+}
+
+.inkwell_timelines .wall_item .item_img_link {
+    float: left;
+    padding: 0 10px 0 0;
+}
+
+.inkwell_timelines .wall_item .item_description {
+    margin-bottom: 10px;
+}
+
+.inkwell_timelines .item_description .name {
+    font-size: 14px;
+    padding-right: 7px;
+    color: #0084b4;
+    font-weight: bolder;
+}
+
+.inkwell_timelines .item_description .title {
+    font-weight: bolder;
+    font-size: 13px;
+}
+
+.inkwell_timelines .wall_item .item_menu {
+    padding-top: 10px;
+}
+
+
+/* Wall item menu */
+
+.inkwell_timelines .favorite_action:hover {
+    background: url('<%= asset_path 'inkwell_timelines/wi-favorite-hover.png' %>') 0 2px no-repeat;
+}
+
+.inkwell_timelines .favorite_action {
+    background: url('<%= asset_path 'inkwell_timelines/wi-favorite.png' %>') 0 2px no-repeat;
+}
+
+.inkwell_timelines .favorite_action.active {
+    background: url('<%= asset_path 'inkwell_timelines/wi-favorite-active.png' %>') 0 2px no-repeat;
+}
+
+.inkwell_timelines .reblog_action:hover {
+    background: url('<%= asset_path 'inkwell_timelines/wi-reblog-hover.png' %>') 0 3px no-repeat;
+}
+
+.inkwell_timelines .reblog_action {
+    background: url('<%= asset_path 'inkwell_timelines/wi-reblog.png' %>') 0 3px no-repeat;
+}
+
+.inkwell_timelines .reblog_action.active {
+    background: url('<%= asset_path 'inkwell_timelines/wi-reblog-active.png' %>') 0 3px no-repeat;
+}
+
+.inkwell_timelines .comment_action:hover {
+    background: url('<%= asset_path 'inkwell_timelines/wi-comment-hover.png' %>') 0 4px no-repeat;
+}
+
+.inkwell_timelines .comment_action {
+    background: url('<%= asset_path 'inkwell_timelines/wi-comment.png' %>') 0 4px no-repeat;
+}
+
+.inkwell_timelines .wall_item .action {
+    display: inline-block;
+    padding-left: 23px;
+    font-size: 11px;
+    height: 20px;
+    line-height: 23px;
+    color: #555;
+    cursor: pointer;
+    margin-right: 10px;
+    float: left;
+}
+
+
+/* Date */
+
+.inkwell_timelines .date {
+    display: inline;
+    font-size: 11px;
+    height: 18px;
+    line-height: 23px;
+    color: #555;
+    float: right;
+}

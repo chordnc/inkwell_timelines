@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
 
       if for_user
         blog_obj.is_reblogged = for_user.reblog? blog_obj
+        puts blog_obj.is_reblogged
         blog_obj.is_favorited = for_user.favorite? blog_obj
       end
 
@@ -56,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def reblog?(obj)
-    if self.id % 2 == 1
+    if obj.id % 2 == 1
       true
     else
       false
@@ -65,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def favorite?(obj)
-    if self.id % 2 == 1
+    if obj.id % 2 == 1
       true
     else
       false

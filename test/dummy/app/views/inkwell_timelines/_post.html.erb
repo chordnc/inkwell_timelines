@@ -6,16 +6,15 @@
       <span class="name"> <%= record.user.name %>:</span>
       <span class="title"> <%= record.title %></span>
     </div>
-    <a class="item_img_link"><img src="<%= record.preview_image %>" class="item_img"></a>
+    <% if record.preview_image %><a class="item_img_link"><img src="<%= record.preview_image %>" class="item_img"></a><% end%>
 
     <p><%= truncate record.body, :length => 500 %></p>
 
     <div class="clear item_menu">
-      <span class="favorite_action action"><%= record.favorite_count %></span>
-      <span class="reblog_action action"><%= record.reblog_count %></span>
+      <span class="favorite_action action<% if record.is_favorited %> active<% end%>"><%= record.favorite_count %></span>
+      <span class="reblog_action action<% if record.is_reblogged %> active<% end%>"><%= record.reblog_count %></span>
       <span class="comment_action action"><%= record.comment_count %></span>
       <span class="date"><%= record.created_at.utc.to_i * 1000 %></span>
-
       <div class="clear"></div>
     </div>
 
