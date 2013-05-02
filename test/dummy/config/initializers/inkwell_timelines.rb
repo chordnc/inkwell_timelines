@@ -1,9 +1,6 @@
 module InkwellTimelines
   class Engine < Rails::Engine
-    config.wall_item_partials = {
-        :post => 'inkwell_timelines/post',
-        :comment => 'inkwell_timelines/comment'
-    }
+    config.load_distance = 150
     config.timeline_blocks = [
         {
             :id => 'timelines_block',

@@ -42,12 +42,10 @@ class User < ActiveRecord::Base
         blog_obj = Post.find item.item_id
       end
 
-      blog_obj.item_id_in_line = item.id
-      blog_obj.is_reblog_in_blogline = item.is_reblog
+      blog_obj.item_id = item.id
 
       if for_user
         blog_obj.is_reblogged = for_user.reblog? blog_obj
-        puts blog_obj.is_reblogged
         blog_obj.is_favorited = for_user.favorite? blog_obj
       end
 

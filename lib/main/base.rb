@@ -21,7 +21,7 @@ module InkwellTimelines
       data = active_timeline[:first_data_get].call(options)
       wall_items = ActionView::OutputBuffer.new
       data.each do |record|
-        wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record}
+        wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
         wall_items += wall_item
       end
       content_tag :div, tab_menu + wall_items, :class => 'inkwell_timelines', :id => block_id

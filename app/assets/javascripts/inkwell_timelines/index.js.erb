@@ -1,0 +1,79 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
+//
+//= require jquery
+//= require jquery_ujs
+//= require_tree .
+
+var inkwell_timelines = {
+    config : {
+        data_loading : false,
+        no_more_data : false
+    },
+
+    formatDate : function (dateTime) {
+        var date = dateTime.getDate();
+        var month = dateTime.getMonth() + 1;
+        var hour = dateTime.getHours();
+        var mins = dateTime.getMinutes();
+        return (date < 10 ? ('0' + date) : date) + '.' + (month < 10 ? ('0' + month) : month) + '.' + dateTime.getFullYear() +
+            ' ' + (hour < 10 ? ('0' + hour) : hour) + ':' + (mins < 10 ? ('0' + mins) : mins);
+    },
+
+    activeTimelineName : function () {
+        var timeline_name = null;
+        var classes = $('.inkwell_timelines .tab-menu .active').attr('class').split(/\s+/);
+        $(classes).each(function(){
+            if (this.indexOf('timeline_') == 0) timeline_name = this.replace('timeline_', '') ;
+        });
+        return timeline_name;
+    },
+
+    timelineBlockName : function () {
+        console.log($('.inkwell_timelines').attr('id'));
+        return $('.inkwell_timelines').attr('id');
+    },
+
+    getItemId : function (wall_item) {
+
+    },
+
+    getData : function () {
+        $.ajax({
+            url: '/inkwell_timelines',
+            type: 'POST',
+            dataType: 'html',
+            data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(), timeline: inkwell_timelines.activeTimelineName() ,last_post_id: last_post_id }),
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+};
+
+
+
+$(document).ready(function () {
+    $('.inkwell_timelines .date').each(function () {
+        $(this).text(inkwell_timelines.formatDate(new Date(parseInt($(this).text()))));
+        $(this).removeAttr('style');
+    });
+
+    $(window).on('scroll', function(e) {
+        var scrHP = $(".inkwell_timelines").height() + $('.inkwell_timelines').offset().top;
+        var scrH2 = $(this).height() + $(this).scrollTop();
+        if (scrHP - scrH2 < <%= InkwellTimelines::Engine::config.load_distance%>) {
+            if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data))
+                inkwell_timelines
+        }
+    });
+});

@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_accessor :item_id_in_line, :is_reblog_in_blogline, :is_reblogged, :is_favorited
+  attr_accessor :item_id, :is_reblogged, :is_favorited
   belongs_to :user
 
   def reblog_count
