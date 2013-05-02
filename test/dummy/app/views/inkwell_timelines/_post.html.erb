@@ -14,7 +14,7 @@
       <span class="favorite_action action<% if record.is_favorited %> active<% end%>"><%= record.favorite_count %></span>
       <span class="reblog_action action<% if record.is_reblogged %> active<% end%>"><%= record.reblog_count %></span>
       <span class="comment_action action"><%= record.comment_count %></span>
-      <span class="date"><%= record.created_at.utc.to_i * 1000 %></span>
+      <span class="date" style="display: none;"><%= record.created_at.utc.to_i * 1000 %></span>
       <div class="clear"></div>
     </div>
 
