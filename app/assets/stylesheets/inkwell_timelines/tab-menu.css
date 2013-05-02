@@ -1,0 +1,24 @@
+.inkwell_timelines .tab-menu {
+    padding: 8px 10px 15px 10px;
+    font-size: 14px;
+    font-weight: bolder;
+    border-bottom: 1px solid #eee;
+}
+
+.inkwell_timelines .tab-menu span {
+    color: #0084b4;
+    text-decoration: none;
+}
+
+.inkwell_timelines .tab-menu span.active {
+    color: inherit;
+}
+
+.inkwell_timelines .tab-menu span:hover {
+    text-decoration: underline;
+}
+
+.inkwell_timelines .tab-menu > * {
+    margin: 5px 7px 0 0;
+    display: inline-block;
+}
