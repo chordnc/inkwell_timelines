@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :comments
 
   def blogline(options = {})
-    last_shown_obj_id = options[:last_shown_obj_id]
+    last_shown_obj_id = options[:last_item_id]
     limit = options[:limit] || 10
     for_user = options[:for_user]
     categories = options[:categories]

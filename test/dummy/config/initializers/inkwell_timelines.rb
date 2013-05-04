@@ -1,6 +1,7 @@
 module InkwellTimelines
   class Engine < Rails::Engine
     config.load_distance = 150
+    config.autoload_path = 'timeline/get/'
     config.timeline_blocks = [
         {
             :id => 'timelines_block',

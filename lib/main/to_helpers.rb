@@ -1,5 +1,5 @@
 module InkwellTimelines
-  module InkwellTimelinesHelpers
+  module Helpers
     def inkwell_timelines_tag(block_id, options = {})
       block_configs = InkwellTimelines::Engine::config.timeline_blocks
       block_index = block_configs.index{|block| block[:id] == block_id}
@@ -29,4 +29,4 @@ module InkwellTimelines
   end
 end
 
-ActionView::Base.send :include, InkwellTimelines::InkwellTimelinesHelpers
+ActionView::Base.send :include, InkwellTimelines::Helpers

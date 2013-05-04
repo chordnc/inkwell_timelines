@@ -39,22 +39,29 @@ var inkwell_timelines = {
     },
 
     timelineBlockName : function () {
-        console.log($('.inkwell_timelines').attr('id'));
         return $('.inkwell_timelines').attr('id');
     },
 
-    getItemId : function (wall_item) {
-
+    lastItemId : function () {
+        var id = $('.wall_item').last().attr('id');
+        if (id) {
+            var splitted_id = id.split('_');
+            return splitted_id[splitted_id.length - 1]
+        }
+        return null;
     },
 
     getData : function () {
         $.ajax({
-            url: '/inkwell_timelines',
+            url: '<%= InkwellTimelines::Engine::config.autoload_path%>',
             type: 'POST',
             dataType: 'html',
-            data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(), timeline: inkwell_timelines.activeTimelineName() ,last_post_id: last_post_id }),
+            data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(), timeline: inkwell_timelines.activeTimelineName(), last_item_id: inkwell_timelines.lastItemId()}),
             success: function (data) {
                 console.log(data);
+            },
+            complete: function () {
+                inkwell_timelines.config.data_loading = false;
             }
         });
     }
@@ -72,8 +79,12 @@ $(document).ready(function () {
         var scrHP = $(".inkwell_timelines").height() + $('.inkwell_timelines').offset().top;
         var scrH2 = $(this).height() + $(this).scrollTop();
         if (scrHP - scrH2 < <%= InkwellTimelines::Engine::config.load_distance%>) {
-            if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data))
-                inkwell_timelines
+            if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data)){
+                inkwell_timelines.config.data_loading = true;
+                inkwell_timelines.getData();
+            }
+
+
         }
     });
 });
