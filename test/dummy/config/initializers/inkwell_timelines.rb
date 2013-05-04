@@ -11,8 +11,10 @@ module InkwellTimelines
                     :name => 'Blog',
                     :active => true,
                     :first_data_get => ->(options = {}) {
-                      options[:obj].blogline options
-                    }
+                      user = User.find options[:obj_id]
+                      user.blogline options
+                    },
+                    :transferred_params => [:obj_id]
                 }
             ]
         }

@@ -6,6 +6,7 @@ module InkwellTimelines
       current_block = block_configs[block_index]
 
       tab_menu_params = []
+      transferred_params = []
       active_timeline = nil
       timeline_configs = current_block[:timelines]
       timeline_configs.each do |config|
@@ -15,6 +16,12 @@ module InkwellTimelines
             :active => config[:active]
         }
         active_timeline = config if config[:active]
+
+        if config[:transferred_params] and !config[:transferred_params].empty?
+          passed_options = {:name => config[:id], :value => {}}
+          config[:transferred_params].each {|param| passed_options[:value][param] = options[param]}
+          transferred_params << passed_options
+        end
       end
 
       tab_menu = render :partial => 'inkwell_timelines/tab_menu', :locals => {:options => tab_menu_params}
@@ -24,7 +31,15 @@ module InkwellTimelines
         wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
         wall_items += wall_item
       end
-      content_tag :div, tab_menu + wall_items, :class => 'inkwell_timelines', :id => block_id
+
+      transferred_params_fields = ActionView::OutputBuffer.new
+      unless transferred_params.empty?
+        transferred_params.each do |params|
+          transferred_params_fields += tag :input, :type => :hidden, :class => "transferred_params #{params[:name]}", :value => ActiveSupport::JSON.encode(params[:value])
+        end
+      end
+
+      content_tag :div, tab_menu + (transferred_params_fields unless transferred_params.empty?) + wall_items, :class => 'inkwell_timelines', :id => block_id
     end
   end
 end

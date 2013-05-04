@@ -1,1 +1,1 @@
-<%= inkwell_timelines_tag('timelines_block', :obj => User.where(:nick => 'Pushkin').first, :for_user => current_user) %>
+<%= inkwell_timelines_tag('timelines_block', :obj_id => User.where(:nick => 'Pushkin').first.id, :for_user => current_user) %>

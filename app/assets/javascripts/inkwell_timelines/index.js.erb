@@ -43,7 +43,7 @@ var inkwell_timelines = {
     },
 
     lastItemId : function () {
-        var id = $('.wall_item').last().attr('id');
+        var id = $('.inkwell_timelines .wall_item').last().attr('id');
         if (id) {
             var splitted_id = id.split('_');
             return splitted_id[splitted_id.length - 1]
@@ -51,12 +51,20 @@ var inkwell_timelines = {
         return null;
     },
 
+    transferredOptions : function (timeline) {
+        return $('.inkwell_timelines input.transferred_params.'+timeline).attr('value');
+    },
+
     getData : function () {
+        var timeline = inkwell_timelines.activeTimelineName();
         $.ajax({
             url: '<%= InkwellTimelines::Engine::config.autoload_path%>',
             type: 'POST',
             dataType: 'html',
-            data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(), timeline: inkwell_timelines.activeTimelineName(), last_item_id: inkwell_timelines.lastItemId()}),
+            data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(),
+                timeline: timeline,
+                last_item_id: inkwell_timelines.lastItemId(),
+                transferred_options: inkwell_timelines.transferredOptions(timeline)}),
             success: function (data) {
                 console.log(data);
             },
