@@ -70,4 +70,8 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  def can_see_timeline(other_user)
+    true
+  end
 end

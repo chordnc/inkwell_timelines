@@ -102,12 +102,10 @@ $(document).ready(function () {
         var scrHP = $(".inkwell_timelines").height() + $('.inkwell_timelines').offset().top;
         var scrH2 = $(this).height() + $(this).scrollTop();
         if (scrHP - scrH2 < <%= InkwellTimelines::Engine::config.load_distance%>) {
-            if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data)){
+            if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data)) {
                 inkwell_timelines.config.data_loading = true;
                 inkwell_timelines.getData();
             }
-
-
         }
     });
 });
