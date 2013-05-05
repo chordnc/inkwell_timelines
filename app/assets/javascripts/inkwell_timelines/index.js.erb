@@ -67,11 +67,28 @@ var inkwell_timelines = {
                 transferred_params: inkwell_timelines.transferredParams(current_timeline)
             }),
             success: function (data) {
-                console.log(data);
+                inkwell_timelines.buildTimeline(data);
             },
             complete: function () {
                 inkwell_timelines.config.data_loading = false;
             }
+        });
+    },
+
+    buildTimeline : function (data) {
+        if (data == "") {
+            inkwell_timelines.config.no_more_data = true;
+            return;
+        }
+        $('.inkwell_timelines').append(data);
+        inkwell_timelines.formDate();
+
+    },
+
+    formDate : function () {
+        $('.inkwell_timelines .date:hidden').each(function () {
+            $(this).text(inkwell_timelines.formatDate(new Date(parseInt($(this).text()))));
+            $(this).removeAttr('style');
         });
     }
 };
@@ -79,10 +96,7 @@ var inkwell_timelines = {
 
 
 $(document).ready(function () {
-    $('.inkwell_timelines .date').each(function () {
-        $(this).text(inkwell_timelines.formatDate(new Date(parseInt($(this).text()))));
-        $(this).removeAttr('style');
-    });
+    inkwell_timelines.formDate();
 
     $(window).on('scroll', function(e) {
         var scrHP = $(".inkwell_timelines").height() + $('.inkwell_timelines').offset().top;
