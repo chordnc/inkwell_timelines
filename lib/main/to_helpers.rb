@@ -25,7 +25,7 @@ module InkwellTimelines
       end
 
       tab_menu = render :partial => 'inkwell_timelines/tab_menu', :locals => {:options => tab_menu_params}
-      data = active_timeline[:first_data_get].call(options)
+      data = active_timeline[:data_get].call(options)
       wall_items = ActionView::OutputBuffer.new
       data.each do |record|
         wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
@@ -41,6 +41,30 @@ module InkwellTimelines
 
       content_tag :div, tab_menu + (transferred_params_fields unless transferred_params.empty?) + wall_items, :class => 'inkwell_timelines', :id => block_id
     end
+
+    def inkwell_timeline_autoload_data(request_body, options = {})
+         request_params = ActiveSupport::JSON.decode(request_body).symbolize_keys!
+         options.merge! request_params
+         options.merge! ActiveSupport::JSON.decode(options[:transferred_params]).symbolize_keys!
+         puts y options
+
+         block_configs = InkwellTimelines::Engine::config.timeline_blocks
+         block_index = block_configs.index{|block| block[:id] == options[:block_name]}
+         raise "block #{options[:block_name]} is not found" unless block_index
+         current_block = block_configs[block_index]
+
+         block_timelines = current_block[:timelines]
+         active_timeline = nil
+         block_timelines.each {|timeline| active_timeline = timeline if timeline[:id] == options[:timeline]}
+
+         data = active_timeline[:data_get].call options
+         wall_items = ActionView::OutputBuffer.new
+         data.each do |record|
+           wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
+           wall_items += wall_item
+         end
+         wall_items
+       end
   end
 end
 

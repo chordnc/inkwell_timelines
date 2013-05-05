@@ -51,20 +51,21 @@ var inkwell_timelines = {
         return null;
     },
 
-    transferredOptions : function (timeline) {
+    transferredParams : function (timeline) {
         return $('.inkwell_timelines input.transferred_params.'+timeline).attr('value');
     },
 
     getData : function () {
-        var timeline = inkwell_timelines.activeTimelineName();
+        var current_timeline = inkwell_timelines.activeTimelineName();
         $.ajax({
             url: '<%= InkwellTimelines::Engine::config.autoload_path%>',
             type: 'POST',
             dataType: 'html',
             data: JSON.stringify({ block_name: inkwell_timelines.timelineBlockName(),
-                timeline: timeline,
+                timeline: current_timeline,
                 last_item_id: inkwell_timelines.lastItemId(),
-                transferred_options: inkwell_timelines.transferredOptions(timeline)}),
+                transferred_params: inkwell_timelines.transferredParams(current_timeline)
+            }),
             success: function (data) {
                 console.log(data);
             },
