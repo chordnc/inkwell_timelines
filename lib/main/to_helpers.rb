@@ -25,6 +25,15 @@ module InkwellTimelines
       end
 
       tab_menu = render :partial => 'inkwell_timelines/tab_menu', :locals => {:options => tab_menu_params}
+
+      multi_selectors = ActionView::OutputBuffer.new
+      if active_timeline[:multi_selectors] and !active_timeline[:multi_selectors].empty?
+        active_timeline[:multi_selectors].each do |selector|
+          records = selector[:data_get].call(options)
+          multi_selectors += render :partial => 'inkwell_timelines/multi_selector', :locals => {:records => records, :options => selector}
+        end
+      end
+
       data = active_timeline[:data_get].call(options)
       wall_items = ActionView::OutputBuffer.new
       data.each do |record|
@@ -39,7 +48,7 @@ module InkwellTimelines
         end
       end
 
-      content_tag :div, tab_menu + (transferred_params_fields unless transferred_params.empty?) + wall_items, :class => 'inkwell_timelines', :id => block_id
+      content_tag :div, tab_menu + multi_selectors + (transferred_params_fields unless transferred_params.empty?) + wall_items, :class => 'inkwell_timelines', :id => block_id
     end
 
     def inkwell_timelines_autoload_tag(options = {})

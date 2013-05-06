@@ -11,10 +11,23 @@ module InkwellTimelines
                     :name => 'Blog',
                     :active => true,
                     :data_get => ->(options = {}) {
-                      user = User.find options[:obj_id]
+                      user = User.find options[:user_id]
                       user.blogline options
                     },
-                    :transferred_params => [:obj_id]
+                    :transferred_params => [:user_id],
+                    :multi_selectors => [
+                        {
+                            :id => 'category',
+                            :name => 'Category',
+                            :id_field => 'id',
+                            :name_field => 'name',
+                            :parent_id_field => 'parent_category_id',
+                            :data_get => ->(options = {}) {
+                              Category.where(:owner_id => options[:user_id], :owner_type => 'u')
+                            }
+
+                        }
+                    ]
                 }
             ]
         }

@@ -1,0 +1,61 @@
+<div class="inkwell_multi_selector">
+  <span class="name"> <%= options[:name] %>: </span>
+  <div class="action">
+    Change
+    <div class="dropdown" style="display: none">
+    <%= render :partial => 'inkwell_timelines/multi_selector_item', :locals => {:records => records, :id => nil} %>
+
+
+      <!--<div>-->
+        <!--<span class="nesting collapsed"></span>-->
+        <!--<span class="checkbox_with_label">Games</span>-->
+
+        <!--<div class="nested" style="display: none">-->
+          <!--<span class="nesting collapsed"></span>-->
+          <!--<span class="checkbox_with_label checked">Community</span>-->
+
+          <!--<div class="nested" style="display: none">-->
+            <!--<span class="nesting"></span>-->
+            <!--<span class="checkbox_with_label checked">Community1</span>-->
+          <!--</div>-->
+          <!--<div class="nested" style="display: none">-->
+            <!--<span class="nesting"></span>-->
+            <!--<span class="checkbox_with_label checked">Community2</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<span class="nesting"></span>-->
+        <!--<span class="checkbox_with_label checked">TV</span>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<span class="nesting collapsed"></span>-->
+        <!--<span class="checkbox_with_label checked">Community</span>-->
+
+        <!--<div class="nested" style="display: none">-->
+          <!--<span class="nesting"></span>-->
+          <!--<span class="checkbox_with_label checked">Community</span>-->
+        <!--</div>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="current_state">
+    <span>TV</span>
+    <span>Games</span>
+    <span>Coding</span>
+    <span>Photo</span>
+    <span>Friends</span> <span>TV</span>
+    <span>Games</span>
+    <span>Coding</span>
+    <span>Photo</span>
+    <span>Friends</span><span>TV</span>
+    <span>Games</span>
+    <span>Coding</span>
+    <span>Photo</span>
+    <span>Friends</span><span>TV</span>
+    <span>Games</span>
+    <span>Coding</span>
+    <span>Photo</span>
+    <span>Friends</span>
+  </div>
+</div>
