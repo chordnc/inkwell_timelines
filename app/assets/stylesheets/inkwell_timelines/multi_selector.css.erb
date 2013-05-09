@@ -83,12 +83,12 @@
 .inkwell_timelines .inkwell_multi_selector .checkbox_with_label {
     display: inline-block;
     padding-left: 20px;
-    background: url('http://192.168.56.101:3000/img/checkbox-unchecked.png') no-repeat 0 1px;
+    background: url('<%= asset_path 'inkwell_timelines/checkbox-unchecked.png' %>') no-repeat 0 1px;
     margin: 0 0 5px 5px;
 }
 
 .inkwell_timelines .inkwell_multi_selector .checkbox_with_label.checked {
-    background: url('http://192.168.56.101:3000/img/checkbox-checked.png') no-repeat 0 1px;
+    background: url('<%= asset_path 'inkwell_timelines/checkbox-checked.png' %>') no-repeat 0 1px;
 }
 
 .inkwell_timelines .inkwell_multi_selector .nesting {
@@ -99,11 +99,11 @@
 }
 
 .inkwell_timelines .inkwell_multi_selector .nesting.expanded {
-    background: url('http://192.168.56.101:3000/img/minus.png') no-repeat 0 2px;
+    background: url('<%= asset_path 'inkwell_timelines/minus.png' %>') no-repeat 0 2px;
 }
 
 .inkwell_timelines .inkwell_multi_selector .nesting.collapsed {
-    background: url('http://192.168.56.101:3000/img/plus.png') no-repeat 0 1px;
+    background: url('<%= asset_path 'inkwell_timelines/plus.png' %>') no-repeat 0 1px;
 }
 
 .inkwell_timelines .inkwell_multi_selector .nested {
