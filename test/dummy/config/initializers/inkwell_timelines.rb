@@ -23,6 +23,7 @@ module InkwellTimelines
                             :name_field => 'name',
                             :parent_id_field => 'parent_category_id',
                             :child_record_ids => 'child_record_ids',
+                            :checked_field => 'checked',
                             :data_get => ->(options = {}) {
                               Category.where(:owner_id => options[:user_id], :owner_type => 'u')
                             }

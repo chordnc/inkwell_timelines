@@ -72,7 +72,7 @@ module InkwellTimelines
 
     def inkwell_selector_current_state(records, options = {})
       result_ids, checked_ids = [], []
-      records.select {|rec| rec.checked} .each do |record|
+      records.select {|rec| rec.send(options[:checked_field])} .each do |record|
         record_child_ids = record.send(options[:child_record_ids])
         check_result = record_child_ids & result_ids
         if check_result.empty?
