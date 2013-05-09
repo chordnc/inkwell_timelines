@@ -41,8 +41,9 @@ ActiveRecord::Schema.define(:version => 20130422113135) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "parent_category_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.boolean  "checked",            :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "comments", :force => true do |t|

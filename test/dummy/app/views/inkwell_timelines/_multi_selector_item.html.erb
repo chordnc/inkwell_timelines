@@ -1,8 +1,0 @@
-<% records.where(:parent_category_id => id).each do |record| %>
-    <div>
-        <% child_records = records.where(:parent_category_id => record.id) %>
-        <span class="nesting <% unless child_records.empty? %>collapsed<% end %>"></span>
-        <span class="checkbox_with_label"><%= record.name %></span>
-        <%= render :partial => 'inkwell_timelines/multi_selector_item', :locals => {:records => records, :id => record.id} unless child_records.empty? %>
-    </div>
-<% end %>

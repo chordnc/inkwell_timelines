@@ -547,13 +547,13 @@ yesenin_post_6 = Post.create :title => "Waken me early tomorrow...",
                              :user_id => yesenin.id
 
 cat_0 = Category.create :name => 'Category_0', :owner_id => pushkin.id, :owner_type => 'u'
-cat_0_0 =Category.create :name => 'Category_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0.id
-cat_0_0_0 = Category.create :name => 'Category_0_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0.id
-cat_0_0_1 =Category.create :name => 'Category_0_0_1', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0.id
+cat_0_0 =Category.create :name => 'Category_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0.id, :checked => true
+cat_0_0_0 = Category.create :name => 'Category_0_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0.id, :checked => true
+cat_0_0_1 =Category.create :name => 'Category_0_0_1', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0.id, :checked => true
 cat_0_1 =Category.create :name => 'Category_0_1', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0.id
 cat_1 = Category.create :name => 'Category_1', :owner_id => pushkin.id, :owner_type => 'u'
-cat_2 = Category.create :name => 'Category_2', :owner_id => pushkin.id, :owner_type => 'u'
-cat_2_0 =Category.create :name => 'Category_2_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_2.id
+cat_2 = Category.create :name => 'Category_2', :owner_id => pushkin.id, :owner_type => 'u', :checked => true
+cat_2_0 =Category.create :name => 'Category_2_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_2.id, :checked => true
 
 cat_0.child_ids = ActiveSupport::JSON.encode [cat_0_0.id, cat_0_0_0.id, cat_0_0_1.id, cat_0_1.id]
 cat_0.save

@@ -69,6 +69,29 @@ module InkwellTimelines
       end
       wall_items
     end
+
+    def inkwell_selector_current_state(records, options = {})
+      result_ids, checked_ids = [], []
+      records.select {|rec| rec.checked} .each do |record|
+        record_child_ids = record.send(options[:child_record_ids])
+        check_result = record_child_ids & result_ids
+        if check_result.empty?
+          next if checked_ids.include? record.id
+          result_ids << record.id
+        else
+          result_ids.delete check_result
+          result_ids << record.id
+        end
+        checked_ids += (record_child_ids - checked_ids)
+      end
+      result = ActionView::OutputBuffer.new
+      result_ids.each do |id|
+        state_item = render :partial => "inkwell_timelines/selector_state_item", :locals => {:record => records[records.index{|r| r.id == id}]}
+        result += state_item
+      end
+      result
+    end
+
   end
 end
 
