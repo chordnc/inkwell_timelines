@@ -1,7 +1,8 @@
 <div class="inkwell_multi_selector">
   <span class="name"> <%= options[:name] %>: </span>
   <div class="action">
-    Change
+    <span class="action_name">Change</span>
+    <span class="action_icon"></span>
     <div class="dropdown" style="display: none">
     <%= render :partial => 'inkwell_timelines/multi_selector_items', :locals => {:records => records, :id => nil} %>
 

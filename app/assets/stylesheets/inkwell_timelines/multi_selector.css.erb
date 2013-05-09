@@ -1,0 +1,111 @@
+.inkwell_timelines .inkwell_multi_selector {
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action {
+    display: inline-block;
+    float: left;
+    background-color: #eee;
+    color: #0084b4;
+    cursor: pointer;
+    padding: 3px 8px 4px 8px;
+    font-weight: bold;
+    -webkit-border-radius: 2px;
+    -khtml-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action .action_icon {
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    background: url('<%= asset_path 'inkwell_timelines/up-down.png' %>') no-repeat -16px -5px;
+    float: left;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action:hover .action_icon {
+    background: url('<%= asset_path 'inkwell_timelines/up-down.png' %>') no-repeat -52px -5px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action.on .action_icon {
+    background: url('<%= asset_path 'inkwell_timelines/up-down.png' %>') no-repeat -52px -5px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action .action_name {
+    float: left;
+}
+
+.inkwell_timelines .inkwell_multi_selector .action:hover, .inkwell_timelines .inkwell_multi_selector .action.on {
+    background-color: #0084b4;
+    color: #eee;
+}
+
+.inkwell_timelines .inkwell_multi_selector .name {
+    display: inline-block;
+    float: left;
+    padding: 3px 7px 4px 0;
+    font-weight: bold;
+}
+
+.inkwell_timelines .inkwell_multi_selector .current_state {
+    padding: 3px 0 0 170px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .current_state span {
+    margin:3px 7px 1px 0;
+    color: #0084b4;
+    cursor: pointer;
+}
+
+.inkwell_timelines .inkwell_multi_selector .current_state span:hover {
+    text-decoration: underline;
+}
+
+.inkwell_timelines .inkwell_multi_selector .dropdown {
+    width:300px;
+    max-height: 200px;
+    position: absolute;
+    top:25px;
+    left:0;
+    cursor: default;
+    color: black;
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #eee;
+    font-weight: normal;
+    overflow: auto;
+
+}
+
+.inkwell_timelines .inkwell_multi_selector .checkbox_with_label {
+    display: inline-block;
+    padding-left: 20px;
+    background: url('http://192.168.56.101:3000/img/checkbox-unchecked.png') no-repeat 0 1px;
+    margin: 0 0 5px 5px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .checkbox_with_label.checked {
+    background: url('http://192.168.56.101:3000/img/checkbox-checked.png') no-repeat 0 1px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .nesting {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    float: left;
+}
+
+.inkwell_timelines .inkwell_multi_selector .nesting.expanded {
+    background: url('http://192.168.56.101:3000/img/minus.png') no-repeat 0 2px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .nesting.collapsed {
+    background: url('http://192.168.56.101:3000/img/plus.png') no-repeat 0 1px;
+}
+
+.inkwell_timelines .inkwell_multi_selector .nested {
+    margin-left: 19px;
+}
