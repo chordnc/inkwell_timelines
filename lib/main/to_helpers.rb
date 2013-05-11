@@ -86,7 +86,7 @@ module InkwellTimelines
       end
       result = ActionView::OutputBuffer.new
       result_ids.each do |id|
-        state_item = render :partial => "inkwell_timelines/selector_state_item", :locals => {:record => records[records.index{|r| r.id == id}]}
+        state_item = render :partial => "inkwell_timelines/selector_state_item", :locals => {:record => records[records.index{|r| r.id == id}], :selector_id => options[:id]}
         result += state_item
       end
       result

@@ -1,10 +1,10 @@
-<div class="inkwell_multi_selector">
+<div class="inkwell_multi_selector" id="inkwell_<%= options[:id]%>">
   <span class="name"> <%= options[:name] %>: </span>
   <div class="action">
     <span class="action_name">Change</span>
     <span class="action_icon"></span>
     <div class="dropdown" style="display: none">
-    <%= render :partial => 'inkwell_timelines/multi_selector_items', :locals => {:records => records, :id => nil} %>
+    <%= render :partial => 'inkwell_timelines/multi_selector_items', :locals => {:records => records, :id => nil, :selector_id => options[:id]} %>
 
 
       <!--<div>-->
