@@ -17,7 +17,8 @@
 var inkwell_timelines = {
     config : {
         data_loading : false,
-        no_more_data : false
+        no_more_data : false,
+        current_timestamp : null
     },
 
     formatDate : function (dateTime) {
@@ -30,10 +31,14 @@ var inkwell_timelines = {
     },
 
     activeTimelineName : function () {
+        return inkwell_timelines.timelineName($('.inkwell_timelines .tab-menu .active'));
+    },
+
+    timelineName: function (timeline_obj) {
         var timeline_name = null;
-        var classes = $('.inkwell_timelines .tab-menu .active').attr('class').split(/\s+/);
-        $(classes).each(function(){
-            if (this.indexOf('timeline_') == 0) timeline_name = this.replace('timeline_', '') ;
+        var classes = timeline_obj.attr('class').split(/\s+/);
+        $(classes).each(function () {
+            if (this.indexOf('timeline_') == 0) timeline_name = this.replace('timeline_', '');
         });
         return timeline_name;
     },
@@ -55,8 +60,9 @@ var inkwell_timelines = {
         return $('.inkwell_timelines input.transferred_params.'+timeline).attr('value');
     },
 
-    getData : function () {
-        var current_timeline = inkwell_timelines.activeTimelineName();
+    getData : function (current_timeline) {
+        var timestamp = $.now();
+        inkwell_timelines.config.current_timestamp = timestamp;
         $.ajax({
             url: '<%= InkwellTimelines::Engine::config.autoload_path%>',
             type: 'POST',
@@ -67,7 +73,7 @@ var inkwell_timelines = {
                 transferred_params: inkwell_timelines.transferredParams(current_timeline)
             }),
             success: function (data) {
-                inkwell_timelines.buildTimeline(data);
+                if (timestamp == inkwell_timelines.config.current_timestamp) inkwell_timelines.buildTimeline(data);
             },
             complete: function () {
                 inkwell_timelines.config.data_loading = false;
@@ -90,6 +96,18 @@ var inkwell_timelines = {
             $(this).text(inkwell_timelines.formatDate(new Date(parseInt($(this).text()))));
             $(this).removeAttr('style');
         });
+    },
+
+    removeTimelineData: function () {
+        inkwell_timelines.config.no_more_data = false;
+        $('.inkwell_timelines .inkwell_multi_selector').remove();
+        $('.inkwell_timelines .wall_item').remove();
+    },
+
+    timelineClickHandler: function (timeline_obj) {
+        inkwell_timelines.config.data_loading = true;
+        inkwell_timelines.removeTimelineData();
+        inkwell_timelines.getData(inkwell_timelines.timelineName(timeline_obj));
     }
 };
 
@@ -104,8 +122,12 @@ $(document).ready(function () {
         if (scrHP - scrH2 < <%= InkwellTimelines::Engine::config.load_distance%>) {
             if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data)) {
                 inkwell_timelines.config.data_loading = true;
-                inkwell_timelines.getData();
+                inkwell_timelines.getData(inkwell_timelines.activeTimelineName());
             }
         }
+    });
+
+    $('.inkwell_timelines .tab-menu').on('click', 'span', function () {
+        inkwell_timelines.timelineClickHandler($(this));
     });
 });

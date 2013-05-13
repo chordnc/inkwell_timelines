@@ -61,13 +61,23 @@ module InkwellTimelines
       active_timeline = nil
       block_timelines.each { |timeline| active_timeline = timeline if timeline[:id] == options[:timeline] }
 
+      multi_selectors = ActionView::OutputBuffer.new
+      unless options[:last_item_id]
+        if active_timeline[:multi_selectors] and !active_timeline[:multi_selectors].empty?
+          active_timeline[:multi_selectors].each do |selector|
+            records = selector[:data_get].call(options)
+            multi_selectors += render :partial => 'inkwell_timelines/multi_selector', :locals => {:records => records, :options => selector}
+          end
+        end
+      end
+
       data = active_timeline[:data_get].call options
       wall_items = ActionView::OutputBuffer.new
       data.each do |record|
         wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
         wall_items += wall_item
       end
-      wall_items
+      multi_selectors + wall_items
     end
 
     def inkwell_selector_current_state(records, options = {})

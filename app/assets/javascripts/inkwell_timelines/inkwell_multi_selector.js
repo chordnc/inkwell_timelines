@@ -141,7 +141,7 @@ $(document).ready(function () {
 
     };
 
-    $('.inkwell_multi_selector').on('click', '.action', function (event) {
+    $('.inkwell_timelines').on('click', '.inkwell_multi_selector .action', function (event) {
         inkwell_multi_selector.action_click_handler($(this), event);
     });
 
@@ -150,7 +150,7 @@ $(document).ready(function () {
         if ($(event.target).closest('.inkwell_multi_selector .action').length == 0) inkwell_multi_selector.hide_popup();
     });
 
-    $('.inkwell_multi_selector').on('click', '.checkbox_with_label', function () {
+    $('.inkwell_timelines').on('click', '.inkwell_multi_selector .checkbox_with_label', function () {
         if ($(this).hasClass('checked')) {
             inkwell_multi_selector.uncheck_checkbox($(this));
         } else {
@@ -159,17 +159,17 @@ $(document).ready(function () {
         }
     });
 
-    $('.inkwell_multi_selector').on('click', '.collapsed', function () {
+    $('.inkwell_timelines').on('click', '.inkwell_multi_selector .collapsed', function () {
         $(this).removeClass('collapsed').addClass('expanded');
         $(this).parent().children('.nested').show();
     });
 
-    $('.inkwell_multi_selector').on('click', '.expanded', function () {
+    $('.inkwell_timelines').on('click', '.inkwell_multi_selector .expanded', function () {
         $(this).removeClass('expanded').addClass('collapsed');
         $(this).parent().children('.nested').hide();
     });
 
-    $('.inkwell_multi_selector .current_state').on('click', 'span', function() {
+    $('.inkwell_timelines').on('click', '.inkwell_multi_selector .current_state span', function() {
         inkwell_multi_selector.state_click_handler($(this));
     });
 

@@ -8,6 +8,7 @@
 .inkwell_timelines .tab-menu span {
     color: #0084b4;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .inkwell_timelines .tab-menu span.active {
