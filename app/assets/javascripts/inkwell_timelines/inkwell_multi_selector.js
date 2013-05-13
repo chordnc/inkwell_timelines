@@ -51,11 +51,12 @@ $(document).ready(function () {
                 inkwell_multi_selector.show_popup(action);
         },
 
-        get_children_checkboxes: function (checkbox) {
+        get_children_checkboxes: function (checkbox, all_levels) {
             var result = [];
             var child_divs = checkbox.parent().children('.nested');
             child_divs.each(function () {
-                result.push($(this).children('.checkbox_with_label')[0]);
+                if (all_levels) result = $.merge(result, $(this).find('.checkbox_with_label'))
+                else result.push($(this).children('.checkbox_with_label')[0]);
             });
             return result;
         },
@@ -79,7 +80,7 @@ $(document).ready(function () {
 
             $(state_panel).children('#inkwell_' + selector_name + '_state_' + id).remove();
 
-            var child_checkboxes = inkwell_multi_selector.get_children_checkboxes(checkbox);
+            var child_checkboxes = inkwell_multi_selector.get_children_checkboxes(checkbox, false);
             $(child_checkboxes).each(function () {
                $(state_panel).append('<span id="inkwell_' + selector_name + '_state_' + inkwell_multi_selector.get_id_from_attr_id($(this).attr('id')) + '">' + $(this).text() + '</span>');
             });
@@ -102,7 +103,7 @@ $(document).ready(function () {
             var state_panel = selector.children('.current_state')[0];
             var selector_name = inkwell_multi_selector.get_selector_name(selector);
 
-            var child_checkboxes = inkwell_multi_selector.get_children_checkboxes(checkbox);
+            var child_checkboxes = inkwell_multi_selector.get_children_checkboxes(checkbox, true);
             $(child_checkboxes).each(function () {
                 $(state_panel).children('#inkwell_' + selector_name + '_state_' + inkwell_multi_selector.get_id_from_attr_id($(this).attr('id'))).remove();
             });
