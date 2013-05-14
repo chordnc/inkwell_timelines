@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
     last_shown_obj_id = options[:last_item_id]
     limit = options[:limit] || 10
     for_user = options[:for_user]
-    categories = options[:categories]
+    category = options[:category]
 
-    if categories
+    if category
+      categories = Category.find category
       category_ids = []
       categories.each do |category|
         category_ids = category_ids | ActiveSupport::JSON.decode(category.child_ids) | [category.id]

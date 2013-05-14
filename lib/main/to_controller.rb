@@ -5,6 +5,15 @@ module InkwellTimelines
       options.merge! request_params
       options.merge! ActiveSupport::JSON.decode(options[:transferred_params]).symbolize_keys!
       options.delete :transferred_params
+
+      if options[:selectors_values]
+        options[:selectors_values].each do |selector_values|
+          selector_values.symbolize_keys!
+          options[selector_values[:name].to_sym] = selector_values[:data]
+        end
+        options.delete :selectors_values
+      end
+
       options
     end
   end
