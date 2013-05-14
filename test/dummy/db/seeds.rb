@@ -604,3 +604,17 @@ BloglinesCategories.create :category_id => cat_2.id, :blog_item_id => blogline_p
 BloglinesCategories.create :category_id => cat_0_0_1.id, :blog_item_id => blogline_p_1.id, :blog_item_created_at => blogline_p_1.created_at, :item_id => blogline_p_1.item_id, :item_type => blogline_p_1.item_type
 BloglinesCategories.create :category_id => cat_0_0_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
 BloglinesCategories.create :category_id => cat_2_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
+
+Favoriteline.create :item_id => pushkin_post_4.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => yesenin_post_2.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => yesenin_post_4.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => pushkin_comment_1.id, :item_type => 'c', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => yesenin_post_6.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => pushkin_post_3.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => pushkin_post_1.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => lermontov_post_6.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => lermontov_post_2.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => lermontov_post_3.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => yesenin_post_1.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => lermontov_post_1.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
+Favoriteline.create :item_id => pushkin_comment_2.id, :item_type => 'c', :owner_id => pushkin.id, :owner_type => 'u'

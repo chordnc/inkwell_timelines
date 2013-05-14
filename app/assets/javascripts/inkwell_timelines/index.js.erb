@@ -107,6 +107,10 @@ var inkwell_timelines = {
     timelineClickHandler: function (timeline_obj) {
         inkwell_timelines.config.data_loading = true;
         inkwell_timelines.removeTimelineData();
+        if (!timeline_obj.hasClass('active')) {
+            $('.inkwell_timelines .tab-menu .active').removeClass('active');
+            timeline_obj.addClass('active');
+        }
         inkwell_timelines.getData(inkwell_timelines.timelineName(timeline_obj));
     }
 };

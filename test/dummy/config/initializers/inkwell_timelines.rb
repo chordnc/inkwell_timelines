@@ -30,6 +30,15 @@ module InkwellTimelines
 
                         }
                     ]
+                },
+                {
+                    :id => 'favoriteline',
+                    :name => 'Favorite',
+                    :data_get => ->(options = {}) {
+                      user = User.find options[:user_id]
+                      user.favoriteline options
+                    },
+                    :transferred_params => [:user_id]
                 }
             ]
         }

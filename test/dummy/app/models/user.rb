@@ -54,6 +54,37 @@ class User < ActiveRecord::Base
     result
   end
 
+  def favoriteline(options = {})
+    last_shown_obj_id = options[:last_item_id]
+    limit = options[:limit] || 10
+    for_user = options[:for_user]
+
+    if last_shown_obj_id
+      favorite_items = Favoriteline.where(:owner_id => self.id, :owner_type => 'u').where("created_at < ?", Favoriteline.find(last_shown_obj_id).created_at).order("created_at DESC").limit(limit)
+    else
+      favorite_items = Favoriteline.where(:owner_id => self.id, :owner_type => 'u').order("created_at DESC").limit(limit)
+    end
+
+    result = []
+    favorite_items.each do |item|
+      if item.item_type == 'c'
+        favorite_obj = Comment.find item.item_id
+      else
+        favorite_obj = Post.find item.item_id
+      end
+
+      favorite_obj.item_id = item.id
+
+      if for_user
+        favorite_obj.is_reblogged = for_user.reblog? favorite_obj
+        favorite_obj.is_favorited = for_user.favorite? favorite_obj
+      end
+
+      result << favorite_obj
+    end
+    result
+  end
+
   def reblog?(obj)
     if obj.id % 2 == 1
       true
