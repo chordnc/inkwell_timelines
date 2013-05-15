@@ -8,6 +8,8 @@
     </div>
   </div>
   <div class="current_state">
-    <%= inkwell_selector_current_state records, options %>
+    <% records.select {|record| record.parent_category_id == nil }.each do |record| %>
+        <span id="<%= "inkwell_#{options[:id]}_state_#{record.id}" %>"><%= record.name %></span>
+    <% end %>
   </div>
 </div>

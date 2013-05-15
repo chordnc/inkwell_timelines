@@ -7,7 +7,6 @@ class CreateCategories < ActiveRecord::Migration
       t.integer "owner_id"
       t.string "owner_type"
       t.integer "parent_category_id"
-      t.boolean "checked", :default => false
 
       t.timestamps
     end
