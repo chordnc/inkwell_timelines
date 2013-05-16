@@ -41,22 +41,24 @@ var inkwell_timelines = {
     },
 
     transferredParams : function (timeline) {
-        return $('.inkwell_timelines input.transferred_params.'+timeline).attr('value');
+        return $('.inkwell_timelines input.transferred_params.' + timeline).attr('value');
     },
 
     selectorsValues : function () {
         var selectors = $('.inkwell_timelines .inkwell_multi_selector');
         var result = [];
         selectors.each(function () {
-            var data = {};
-            data['name'] = inkwell_multi_selector.get_selector_name($(this));
-            data['data'] = inkwell_multi_selector.top_checked_checkboxes_ids($(this));
-            result.push(data);
+            if (!inkwell_multi_selector.is_all_checked($('.inkwell_timelines .inkwell_multi_selector'))) {
+                var data = {};
+                data['name'] = inkwell_multi_selector.get_selector_name($(this));
+                data['data'] = inkwell_multi_selector.top_checked_checkboxes_ids($(this));
+                result.push(data);
+            }
         });
         return (result.length > 0 ? result : null);
     },
 
-    getData : function (current_timeline) {
+    getData : function (current_timeline, include_selectors) {
         var timestamp = $.now();
         inkwell_timelines.config.current_timestamp = timestamp;
         $.ajax({
@@ -67,7 +69,8 @@ var inkwell_timelines = {
                 timeline: current_timeline,
                 last_item_id: inkwell_timelines.lastItemId(),
                 transferred_params: inkwell_timelines.transferredParams(current_timeline),
-                selectors_values: inkwell_timelines.selectorsValues()
+                selectors_values: inkwell_timelines.selectorsValues(),
+                include_selectors: include_selectors
             }),
             success: function (data) {
                 if (timestamp == inkwell_timelines.config.current_timestamp) inkwell_timelines.buildTimeline(data);
@@ -95,20 +98,27 @@ var inkwell_timelines = {
         });
     },
 
-    removeTimelineData: function () {
+    removeTimelineData: function (include_selectors) {
         inkwell_timelines.config.no_more_data = false;
-        $('.inkwell_timelines .inkwell_multi_selector').remove();
+        if (include_selectors) $('.inkwell_timelines .inkwell_multi_selector').remove();
         $('.inkwell_timelines .wall_item').remove();
     },
 
     timelineClickHandler: function (timeline_obj) {
         inkwell_timelines.config.data_loading = true;
-        inkwell_timelines.removeTimelineData();
+        inkwell_timelines.removeTimelineData(true);
         if (!timeline_obj.hasClass('active')) {
             $('.inkwell_timelines .tab-menu .active').removeClass('active');
             timeline_obj.addClass('active');
         }
-        inkwell_timelines.getData(inkwell_timelines.timelineName(timeline_obj));
+        inkwell_timelines.getData(inkwell_timelines.timelineName(timeline_obj), true);
+    },
+
+    selectorChangedHandler: function (selector) {
+        inkwell_timelines.config.data_loading = true;
+        inkwell_timelines.removeTimelineData(false);
+        var timeline_obj = $('.inkwell_timelines .tab-menu .active')[0];
+        inkwell_timelines.getData(inkwell_timelines.timelineName($(timeline_obj)), false);
     }
 };
 
@@ -117,19 +127,23 @@ var inkwell_timelines = {
 $(document).ready(function () {
     inkwell_timelines.formDate();
 
-
     $(window).on('scroll', function(e) {
+        inkwell_multi_selector.hide_popup();
         var scrHP = $(".inkwell_timelines").height() + $('.inkwell_timelines').offset().top;
         var scrH2 = $(this).height() + $(this).scrollTop();
         if (scrHP - scrH2 < <%= InkwellTimelines::Engine::config.load_distance%>) {
             if (!(inkwell_timelines.config.data_loading || inkwell_timelines.config.no_more_data)) {
                 inkwell_timelines.config.data_loading = true;
-                inkwell_timelines.getData(inkwell_timelines.activeTimelineName());
+                inkwell_timelines.getData(inkwell_timelines.activeTimelineName(), false);
             }
         }
     });
 
     $('.inkwell_timelines .tab-menu').on('click', 'span', function () {
         inkwell_timelines.timelineClickHandler($(this));
+    });
+
+    $(document).on('state_changed', '.inkwell_multi_selector', function () {
+        inkwell_timelines.selectorChangedHandler($(this));
     });
 });

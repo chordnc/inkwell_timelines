@@ -546,6 +546,7 @@ yesenin_post_6 = Post.create :title => "Waken me early tomorrow...",
                                        Shall over my verses flow. ",
                              :user_id => yesenin.id
 
+cat = Category.create :name => 'Without category', :owner_id => pushkin.id, :owner_type => 'u'
 cat_0 = Category.create :name => 'Category_0', :owner_id => pushkin.id, :owner_type => 'u'
 cat_0_0 =Category.create :name => 'Category_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0.id
 cat_0_0_0 = Category.create :name => 'Category_0_0_0', :owner_id => pushkin.id, :owner_type => 'u', :parent_category_id => cat_0_0.id
@@ -604,6 +605,10 @@ BloglinesCategories.create :category_id => cat_2.id, :blog_item_id => blogline_p
 BloglinesCategories.create :category_id => cat_0_0_1.id, :blog_item_id => blogline_p_1.id, :blog_item_created_at => blogline_p_1.created_at, :item_id => blogline_p_1.item_id, :item_type => blogline_p_1.item_type
 BloglinesCategories.create :category_id => cat_0_0_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
 BloglinesCategories.create :category_id => cat_2_0.id, :blog_item_id => blogline_p_0.id, :blog_item_created_at => blogline_p_0.created_at, :item_id => blogline_p_0.item_id, :item_type => blogline_p_0.item_type
+
+Blogline.where(:category_ids => "[]").each do |blogitem|
+  BloglinesCategories.create :category_id => cat.id, :blog_item_id => blogitem.id, :blog_item_created_at => blogitem.created_at, :item_id => blogitem.item_id, :item_type => blogitem.item_type
+end
 
 Favoriteline.create :item_id => pushkin_post_4.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'
 Favoriteline.create :item_id => yesenin_post_2.id, :item_type => 'p', :owner_id => pushkin.id, :owner_type => 'u'

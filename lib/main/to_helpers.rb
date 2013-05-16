@@ -62,7 +62,9 @@ module InkwellTimelines
       block_timelines.each { |timeline| active_timeline = timeline if timeline[:id] == options[:timeline] }
 
       multi_selectors = ActionView::OutputBuffer.new
-      unless options[:last_item_id]
+      puts(options[:include_selectors])
+      puts(!options[:last_item_id] || !options[:include_selectors])
+      if options[:include_selectors]
         if active_timeline[:multi_selectors] and !active_timeline[:multi_selectors].empty?
           active_timeline[:multi_selectors].each do |selector|
             records = selector[:data_get].call(options)

@@ -1,19 +1,35 @@
 var inkwell_multi_selector = {
     popup_shown: false,
+    current_state: null,
+
+    state_changed: $.Event('state_changed'),
+
     show_popup: function (action_obj) {
         this.popup_shown = true;
+        this.current_state = $(action_obj.parent().children('.current_state')[0]).children().text();
         action_obj.addClass('on');
         action_obj.find('.dropdown').show();
     },
 
     hide_popup: function (action_obj) {
-        if (!action_obj) {
-            var dropdown = $('.inkwell_multi_selector .dropdown:visible');
-            action_obj = dropdown.closest('.inkwell_multi_selector .action');
+        if (this.popup_shown) {
+            if (!action_obj) {
+                var dropdown = $('.inkwell_multi_selector .dropdown:visible');
+                action_obj = dropdown.closest('.inkwell_multi_selector .action');
+            }
+            this.popup_shown = false;
+            action_obj.removeClass('on');
+            action_obj.find('.dropdown').hide();
+            if (inkwell_multi_selector.has_changes(action_obj)) {
+                $($(action_obj).closest('.inkwell_multi_selector')).trigger(this.state_changed);
+            }
         }
-        this.popup_shown = false;
-        action_obj.removeClass('on');
-        action_obj.find('.dropdown').hide();
+    },
+
+    has_changes: function (action_obj) {
+        result = ($(action_obj.parent().children('.current_state')[0]).children().text() != this.current_state);
+        current_state = null;
+        return result;
     },
 
     uncheck_upper_checkboxes: function (next_parent, state_panel, selector_name) {
@@ -96,10 +112,22 @@ var inkwell_multi_selector = {
     },
 
     top_checked_checkboxes_ids: function (selector) {
-        result = [];
+        var result = [];
         selector.children('.current_state').children('span').each(function () {
             var splitted_id = $(this).attr('id').split('_');
             result.push(splitted_id[splitted_id.length - 1]);
+        });
+        return result;
+    },
+
+    is_all_checked: function (selector) {
+        var first_level_divs = selector.find('.dropdown').children('div');
+        var result = true;
+        first_level_divs.each(function () {
+            if (!result) return;
+            if (!$(this).children('.checkbox_with_label').hasClass('checked')) {
+                result = false;
+            }
         });
         return result;
     },
@@ -128,6 +156,7 @@ var inkwell_multi_selector = {
     },
 
     state_click_handler: function (state_item) {
+        this.current_state = $(state_item).parent().children().text();
         var selector = state_item.closest('.inkwell_multi_selector');
         var dropdown = selector.find('.dropdown');
         var selector_name = inkwell_multi_selector.get_selector_name(selector);
@@ -143,7 +172,11 @@ var inkwell_multi_selector = {
             }
         });
 
+        if ($(state_item).parent().children().text() != this.current_state) {
 
+            $(selector).trigger(this.state_changed);
+        }
+        current_state = null;
     }
 
 };
