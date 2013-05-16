@@ -97,7 +97,7 @@ var inkwell_multi_selector = {
 
         var child_checkboxes = inkwell_multi_selector.get_children_checkboxes(checkbox, false);
         $(child_checkboxes).each(function () {
-            $(state_panel).append('<span id="inkwell_' + selector_name + '_state_' + inkwell_multi_selector.get_id_from_attr_id($(this).attr('id')) + '">' + $(this).text() + '</span>');
+            $(state_panel).append(' <span id="inkwell_' + selector_name + '_state_' + inkwell_multi_selector.get_id_from_attr_id($(this).attr('id')) + '">' + $(this).text() + '</span>');
         });
 
         var same_level_divs = checkbox.parents(':eq(1)').children('.nested');
@@ -143,7 +143,7 @@ var inkwell_multi_selector = {
         });
 
         var id = inkwell_multi_selector.get_id_from_attr_id(checkbox.attr('id'));
-        $(state_panel).append('<span id="inkwell_' + selector_name + '_state_' + id + '">' + checkbox.text() + '</span>');
+        $(state_panel).append(' <span id="inkwell_' + selector_name + '_state_' + id + '">' + checkbox.text() + '</span>');
     },
 
     get_id_from_attr_id: function (attr_id) {
