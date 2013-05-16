@@ -87,7 +87,7 @@ var inkwell_multi_selector = {
     },
 
     add_state: function (state_panel, selector_name, id, text) {
-        $(state_panel).append('<span id="inkwell_' + selector_name + '_state_' + id + '">' + text + '</span>');
+        $(state_panel).append(' <span id="inkwell_' + selector_name + '_state_' + id + '">' + text + '</span>');
     },
 
     change_state_on_uncheck: function (checkbox, state_panel, selector_name) {

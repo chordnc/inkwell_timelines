@@ -3,6 +3,6 @@
         <% child_records = records.select {|record| record.parent_category_id == current_record.id} %>
         <span class="nesting <% unless child_records.empty? %>collapsed<% end %>"></span>
         <span class="checkbox_with_label checked" id="<%= "inkwell_#{selector_id}_checkbox_#{current_record.id}" %>"><%= current_record.name %></span>
-        <%= render :partial => 'inkwell_timelines/multi_selector_items', :locals => {:records => records, :id => current_record.id, :selector_id => selector_id} unless child_records.empty? %>
+        <%= render :partial => 'default_partials/multi_selector_items', :locals => {:records => records, :id => current_record.id, :selector_id => selector_id} unless child_records.empty? %>
     </div>
 <% end %>

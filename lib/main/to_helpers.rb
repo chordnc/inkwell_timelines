@@ -1,6 +1,8 @@
 module InkwellTimelines
   module Helpers
     def inkwell_timelines_tag(block_id, options = {})
+      partials_dir = InkwellTimelines::Engine::config.respond_to?('partials_dir') ? InkwellTimelines::Engine::config.partials_dir : 'default_partials'
+
       block_configs = InkwellTimelines::Engine::config.timeline_blocks
       block_index = block_configs.index{|block| block[:id] == block_id}
       current_block = block_configs[block_index]
@@ -24,20 +26,21 @@ module InkwellTimelines
         end
       end
 
-      tab_menu = render :partial => 'inkwell_timelines/tab_menu', :locals => {:options => tab_menu_params}
+      tab_menu = render :partial => "#{partials_dir}/tab_menu", :locals => {:options => tab_menu_params}
 
       multi_selectors = ActionView::OutputBuffer.new
       if active_timeline[:multi_selectors] and !active_timeline[:multi_selectors].empty?
         active_timeline[:multi_selectors].each do |selector|
           records = selector[:data_get].call(options)
-          multi_selectors += render :partial => 'inkwell_timelines/multi_selector', :locals => {:records => records, :options => selector}
+          multi_selectors += render :partial => "#{partials_dir}/multi_selector", :locals => {:records => records, :options => selector}
         end
       end
 
       data = active_timeline[:data_get].call(options)
       wall_items = ActionView::OutputBuffer.new
+      puts
       data.each do |record|
-        wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
+        wall_item = render :partial => "#{partials_dir}/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
         wall_items += wall_item
       end
 
@@ -52,6 +55,8 @@ module InkwellTimelines
     end
 
     def inkwell_timelines_autoload_tag(options = {})
+      partials_dir = InkwellTimelines::Engine::config.respond_to?('partials_dir') ? InkwellTimelines::Engine::config.partials_dir : 'default_partials'
+
       block_configs = InkwellTimelines::Engine::config.timeline_blocks
       block_index = block_configs.index { |block| block[:id] == options[:block_name] }
       raise "block #{options[:block_name]} is not found" unless block_index
@@ -68,7 +73,7 @@ module InkwellTimelines
         if active_timeline[:multi_selectors] and !active_timeline[:multi_selectors].empty?
           active_timeline[:multi_selectors].each do |selector|
             records = selector[:data_get].call(options)
-            multi_selectors += render :partial => 'inkwell_timelines/multi_selector', :locals => {:records => records, :options => selector}
+            multi_selectors += render :partial => "#{partials_dir}/multi_selector", :locals => {:records => records, :options => selector}
           end
         end
       end
@@ -76,7 +81,7 @@ module InkwellTimelines
       data = active_timeline[:data_get].call options
       wall_items = ActionView::OutputBuffer.new
       data.each do |record|
-        wall_item = render :partial => "inkwell_timelines/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
+        wall_item = render :partial => "#{partials_dir}/#{record.class.to_s.downcase}", :locals => {:record => record, :timeline => active_timeline[:id]}
         wall_items += wall_item
       end
       multi_selectors + wall_items
