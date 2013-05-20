@@ -9,7 +9,7 @@ Each timeline can consist of several types objects (Posts and Comments on the sc
 
 Timeline can consist of selectors ( category selector on the screenshot) to customize received data (for example, you can get timeline with only one category's items).
 
-Timelines autoloads next items when it is scrolled to the end.
+Timelines autoload next items when it is scrolled to the end.
 
 ![Inkwell Timelines](https://github.com/salkar/inkwell_timelines/blob/master/test/screen/main.png?raw=true)
 
@@ -22,4 +22,56 @@ gem 'inkwell_timelines', :git => 'https://github.com/salkar/inkwell_timelines.gi
 ```
 
 After it do `bundle install`
+
+Create `inkwell_timelines.rb` file in `config/initializers` and put in it your settings:
+
+```ruby
+module InkwellTimelines
+  class Engine < Rails::Engine
+    # Pixels count between current scroll position and page's end at which the autoload start
+    config.load_distance = 150 
+    config.autoload_path = 'timeline/get/' # Autoload controller path
+    config.timeline_blocks = [ 
+        { # First timelines block
+            :id => 'timelines_block', # Block id
+            :timelines => [ 
+                {
+                    :id => 'blogline', # First timeline id
+                    :name => 'Blog', # First timeline displayed name
+                    :active => true, # Defines which timeline is active at first load
+                    :data_get => ->(options = {}) { # Lambda which get data for form this timeline
+                      user = User.find options[:user_id]
+                      # Function that return array of objects (for example - posts and comments in dummy app)
+                      user.blogline options 
+                    },
+                    # Array of params (of options in :data_get) saved on client side and sent to server on autoload
+                    :transferred_params => [:user_id], 
+                    # Add selector to customize received data (sampling by Category on the screenshot)
+                    :multi_selectors => [  
+                        {
+                            :id => 'category', # Selector id
+                            :name => 'Category', # Selector displayed name (see screenshot)
+                            :data_get => ->(options = {}) { # Lambda which get objects for form selector
+                              Category.where(:owner_id => options[:user_id], :owner_type => 'u')
+                            }
+
+                        }
+                    ]
+                },
+                {
+                    :id => 'favoriteline', # Second timeline id
+                    :name => 'Favorite', # Second timeline displayed name
+                    :data_get => ->(options = {}) { # Lambda which get data for form this timeline
+                      user = User.find options[:user_id]
+                      user.favoriteline options
+                    },
+                    # Transferred through client params (timeline owner in this case)
+                    :transferred_params => [:user_id] 
+                }
+            ]
+        }
+    ]
+  end
+end
+```
 
