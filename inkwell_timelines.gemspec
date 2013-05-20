@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Sergey Sokolov"]
   s.email       = ["sokolov.sergey.a@gmail.com"]
   s.homepage    = "https://github.com/salkar/inkwell_timelines#inkwell-timelines"
-  s.summary     = "Helper for creating timelines with load content while scrolling"
-  s.description = "Helper for creating timelines with load content while scrolling"
+  s.summary     = "Helper for creating timelines with autoload content while scrolling with ability to transmit the additional parameters"
+  s.description = "Helper for creating timelines with autoload content while scrolling with ability to transmit the additional parameters"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
