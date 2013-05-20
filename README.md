@@ -31,6 +31,8 @@ module InkwellTimelines
     # Pixels count between current scroll position and page's end at which the autoload start
     config.load_distance = 150 
     config.autoload_path = 'timeline/get/' # Autoload controller path
+    # Optional. If defined all partials will be searched here
+    config.partials_dir = 'your path to partials' 
     config.timeline_blocks = [ 
         { # First timelines block
             :id => 'timelines_block', # Block id
@@ -75,3 +77,19 @@ module InkwellTimelines
 end
 ```
 
+Next, add ` //= require inkwell_timelines` to your js assets (for example - to application.js) and `*= require inkwell_timelines` to your stylesheets assets (for example - to application.css).
+
+*Notice: if you want to modify CSS or JS you can add your modified files and not add default styles/js*
+
+Default partials are located inside the gem - [here](https://github.com/salkar/inkwell_timelines/tree/master/app/views/default_partials).
+You can change this directory to your adding `config.partials_dir = 'your path to partials'` parameter in your `inkwell_timelines.rb` file.
+
+By default, there are 5 partials in this gem (you can change all of them):
+
+```ruby
+_comment.html.erb # Partial for timeline item for comment object
+_multi_selector.html.erb # Partial for selector
+_multi_selector_items.html.erb # Support partial for selector
+_post.html.erb # Partial for post item for comment object
+_tab_menu.html.erb # Partial for timelines block menu
+```
