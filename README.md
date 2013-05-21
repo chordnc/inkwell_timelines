@@ -1,6 +1,6 @@
 # Inkwell Timelines
 
-Inkwell Timelines provides simple way to create timelines with autoload content while scrolling with ability to transmit the additional parameters.
+Inkwell Timelines provides simple way to create timelines in your Rails app with autoload content while scrolling with ability to transmit the additional parameters.
 It allows you to place timeline blocks on the pages - one block per page. 
 
 Each block can consist of several timelines (Blog and Favorite timelines on the screenshot).
