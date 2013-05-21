@@ -185,3 +185,5 @@ And go to `http://0.0.0.0:3000/` in your browser after it.
 ## License
 
 Inkwell is Copyright © 2013 Sergey Sokolov. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/b8488fa104ca5cf56e74f1060d488ce1 "githalytics.com")](http://githalytics.com/salkar/inkwell_timelines)
