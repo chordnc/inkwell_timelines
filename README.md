@@ -93,3 +93,95 @@ _multi_selector_items.html.erb # Support partial for selector
 _post.html.erb # Partial for post item for comment object
 _tab_menu.html.erb # Partial for timelines block menu
 ```
+
+If there are other objects except posts and comments - add partials for them.
+
+## Usage
+
+To form the timeline block for the first showing add into your view:
+```ruby
+<%= inkwell_timelines_tag(block_id, options = {} %>
+```
+For example:
+```ruby
+<%= inkwell_timelines_tag('timelines_block', 
+                          :user_id => User.where(:nick => 'Pushkin').first.id, 
+                          :for_user => current_user) %>
+```
+
+*Notice: config for this block should be*
+
+To on autoload feature create controller for it, add it in the `routes`, add its route to timeline config. For example:
+
+* add `controllers/timeline_controller.rb`
+```ruby
+class TimelineController < ApplicationController
+  def show
+  end
+end
+```
+
+* add route for it - 
+```ruby
+match "/timeline/get" => "timeline#show"
+```
+
+* add its route to timelines config:
+```ruby
+config.autoload_path = 'timeline/get/'
+```
+
+Next, add to created controller:
+```ruby
+@options = inkwell_timelines_get_params(request.body, :additional options => {})
+```
+
+`inkwell_timelines_get_params` forms options for autoload timeline part generation.
+Additional options needs to merge stored on the server with transferred from client options. 
+You may want to save some options on the server for security reasons (for example - `current_user` should not be sent to the client because there it can be changed).
+
+Here you can check the options that came with the client.
+
+At the end of autoload controller method add 
+```ruby
+render :layout => false
+```
+
+Example:
+
+```ruby
+class TimelineController < ApplicationController
+  def show
+    @options = inkwell_timelines_get_params(request.body, :for_user => current_user)
+
+    #Here you can check came from js options. For exapmle:
+    user = User.find @options[:user_id]
+    raise "current user has no permissions to see #{user.nick} timeline" unless current_user.can_see_timeline user
+
+    render :layout => false
+  end
+end
+```
+
+After it create view file for autoload method in controller (in our cases - `views/timeline/show.html.erb`) and add to it 
+```ruby
+<%= inkwell_timelines_autoload_tag(@options) %>
+```
+
+## Sample
+
+Sample located [here](https://github.com/salkar/inkwell_timelines/tree/master/test/dummy).
+To run it:
+```bash
+$ cd inkwell_timelines/test/dummy
+$ bundle install
+$ rake db:create
+$ rake db:migrate
+$ rake db:seed
+$ rails s
+```
+And go to `http://0.0.0.0:3000/` in your browser after it.
+
+## License
+
+Inkwell is Copyright © 2013 Sergey Sokolov. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.
